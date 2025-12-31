@@ -1,5 +1,6 @@
 package christmas.controller;
 
+import christmas.Order.Badge;
 import christmas.Order.Order;
 import christmas.menu.Menu;
 import christmas.view.InputView;
@@ -247,5 +248,9 @@ public class PromotionController {
 
         // 할인 후 예상 결제 금액 출력
         outputView.printTotalPrice(originalTotalPrice + totalDiscount);
+
+        // 12월 이벤트 배지 여부 출력
+        Badge badge = Badge.fromDiscount(totalDiscount);
+        outputView.printBadge(badge);
     }
 }

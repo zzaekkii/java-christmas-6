@@ -1,5 +1,6 @@
 package christmas.view;
 
+import christmas.Order.Badge;
 import christmas.menu.Menu;
 
 import java.util.Map;
@@ -66,5 +67,11 @@ public class OutputView {
         System.out.println("\n<총혜택 금액>");
 
         System.out.println(String.format("%,d", totalPrice) + "원");
+    }
+
+    public void printBadge(Badge badge) {
+        System.out.println("\n<12월 이벤트 배지>");
+
+        System.out.println(badge.getName());
     }
 }
