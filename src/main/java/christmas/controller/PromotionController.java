@@ -2,7 +2,6 @@ package christmas.controller;
 
 import christmas.Order.Order;
 import christmas.menu.Menu;
-import christmas.menu.MenuType;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 
@@ -22,13 +21,13 @@ public class PromotionController {
         // 기본 환영 문구 출력
         welcome();
 
+        // 기본 메뉴 등록
+        initializeMenu();
+
         // 입력한대로 주문 생성
         Order custumerOrder = readCustomerOrder();
 
-        /// TODO: 기본 메뉴 등록
-        initializeMenu();
-
-        /// TODO: 결과 출력
+        //
 
     }
 
