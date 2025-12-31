@@ -2,7 +2,6 @@ package christmas.Order;
 
 import christmas.menu.Menu;
 
-import java.util.List;
 import java.util.Map;
 
 public class Order {
