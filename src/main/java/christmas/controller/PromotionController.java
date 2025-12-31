@@ -12,7 +12,12 @@ import static christmas.menu.MenuType.*;
 
 public class PromotionController {
 
+    private static final String GIFT_ITEM = "샴페인";
+    private static final int GIFT_COUNT = 1;
     private static final int GIFT_PRICE_BOUND = 120_000;
+    private static final int CHRISTMAS_DAY = 25;
+    private static final int CHRISTMAS_DISCOUNT_BASE = 1_000;
+
 
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
@@ -170,26 +175,41 @@ public class PromotionController {
         // 혜택 결과 시작 문구 출력
         outputView.printResultStart(order.getDay());
 
-        // 주문한 메뉴와 개수 표시
+        // 주문한 메뉴와 개수 출력
         outputView.printMenus(order.getOrderMenuList());
 
-        // 할인 전 총주문 금액
+        // 할인 전 총주문 금액 출력
         outputView.printOriginalTotalPrice(order.getOriginalTotalPrice());
 
 
-        // 총 받은 혜택 목록
+        // 총 받은 혜택 목록 (할인에 사용할 거임)
         Map<String, Integer> advantageList = new HashMap<>();
+        int totalDiscount = 0;
 
-        // 증정 메뉴
-        boolean hasGift = false;
-        if (order.getOriginalTotalPrice() >= GIFT_PRICE_BOUND) {
-            hasGift = true;
-
-            advantageList.put("증정 이벤트", -menuList.get("샴페인").getPrice());
+        // 혜택 확인
+        // 1. 크리스마스 디데이 할인
+        boolean hasChristmasSale = order.getDay() <= CHRISTMAS_DAY;
+        if (hasChristmasSale) {
+            int additionDiscount = order.getDay() * 100;
+            totalDiscount -= (CHRISTMAS_DISCOUNT_BASE + additionDiscount);
+            advantageList.put("크리스마스 디데이 할인", -(CHRISTMAS_DISCOUNT_BASE + additionDiscount));
         }
-        outputView.printGift(hasGift);
 
-        // 혜택받은 내역 출력
+        // 2. 평일 할인 (일-목)
+
+        // 3. 주말 할인 (금,토)
+
+        // 4. 특별 할인
+
+        // 5. 증정 이벤트 (샴페인 1개)
+        boolean hasGift = order.getOriginalTotalPrice() >= GIFT_PRICE_BOUND;
+        if (hasGift) {
+            advantageList.put("증정 이벤트", -menuList.get(GIFT_ITEM).getPrice());
+        }
+
+        // 증정 메뉴 출력
+        outputView.printGift(hasGift, GIFT_ITEM, GIFT_COUNT);
+
 
     }
 }
