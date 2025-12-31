@@ -173,5 +173,8 @@ public class PromotionController {
 
         // 할인 전 총주문 금액
         outputView.printOriginalTotalPrice(order.getOriginalTotalPrice());
+
+        // 증정 메뉴 출력
+        outputView.printGift(order.getOriginalTotalPrice());
     }
 }
