@@ -2,9 +2,9 @@ package christmas.controller;
 
 import christmas.Order.Order;
 import christmas.menu.Menu;
+import christmas.menu.MenuType;
 import christmas.view.InputView;
 import christmas.view.OutputView;
-import org.mockito.internal.matchers.Or;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -80,6 +80,8 @@ public class PromotionController {
 
         // - 구분자로 분리
         Map<Menu, Integer> orderMenus = new HashMap<>();
+        int drinkCount = 0;
+
         for (String order : orders) {
             if (order.isBlank()) {
                 throw new IllegalArgumentException("유효하지 않은 주문입니다. 다시 입력해 주세요.");
@@ -106,6 +108,9 @@ public class PromotionController {
             }
 
             Menu orderMenu = menuList.get(menuAndCount[0]);
+            if (orderMenu.getType().equals(DRINK)) {
+                drinkCount += 1;
+            }
 
             // 중복된 메뉴를 입력한 경우
             if (orderMenus.containsKey(orderMenu)) {
@@ -115,6 +120,11 @@ public class PromotionController {
             // 메뉴 개수가 양수가 아닌 경우
             try {
                 int count = Integer.parseInt(menuAndCount[1]);
+
+                if (count < 1) {
+                    throw new IllegalArgumentException("유효하지 않은 주문입니다. 다시 입력해 주세요.");
+                }
+
                 orderMenus.put(menuList.get(menuAndCount[0]), count);
             } catch (NumberFormatException e) {
                 throw new IllegalArgumentException("유효하지 않은 주문입니다. 다시 입력해 주세요.");
@@ -122,6 +132,11 @@ public class PromotionController {
         }
 
         if (orderMenus.isEmpty()) {
+            throw new IllegalArgumentException("유효하지 않은 주문입니다. 다시 입력해 주세요.");
+        }
+
+        // 음료만 주문 불가능
+        if (drinkCount == orderMenus.size()) {
             throw new IllegalArgumentException("유효하지 않은 주문입니다. 다시 입력해 주세요.");
         }
 
