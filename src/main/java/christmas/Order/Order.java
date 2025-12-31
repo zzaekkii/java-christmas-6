@@ -52,4 +52,14 @@ public class Order {
     public Map<Menu, Integer> getOrderMenuList() {
         return orderMenuList;
     }
+
+    public int getOriginalTotalPrice() {
+        int total = 0;
+
+        for (Map.Entry<Menu, Integer> entry : orderMenuList.entrySet()) {
+            total += entry.getKey().getPrice() * entry.getValue();
+        }
+
+        return total;
+    }
 }

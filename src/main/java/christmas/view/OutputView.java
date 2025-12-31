@@ -27,4 +27,10 @@ public class OutputView {
             System.out.println(entry.getKey() + " " + entry.getValue() + "개");
         }
     }
+
+    public void printOriginalTotalPrice(int originalTotalPrice) {
+        System.out.println("\n<할인 전 총주문 금액>");
+
+        System.out.println(String.format("%,d", originalTotalPrice) + "원");
+    }
 }

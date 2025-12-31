@@ -164,13 +164,14 @@ public class PromotionController {
         return orderMenus;
     }
 
-    private void showAdvantage(Order custumerOrder) {
+    private void showAdvantage(Order order) {
         // 혜택 결과 시작 문구 출력
-        outputView.printResultStart(custumerOrder.getDay());
+        outputView.printResultStart(order.getDay());
 
         // 주문한 메뉴와 개수 표시
-        outputView.printMenus(custumerOrder.getOrderMenuList());
+        outputView.printMenus(order.getOrderMenuList());
 
-
+        // 할인 전 총주문 금액
+        outputView.printOriginalTotalPrice(order.getOriginalTotalPrice());
     }
 }
