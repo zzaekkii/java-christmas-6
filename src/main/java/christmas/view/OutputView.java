@@ -25,7 +25,7 @@ public class OutputView {
         System.out.println("\n<주문 메뉴>");
 
         for (Map.Entry<Menu, Integer> entry : orderMenuList.entrySet()) {
-            System.out.println(entry.getKey() + " " + entry.getValue() + "개");
+            System.out.println(entry.getKey().getName() + " " + entry.getValue() + "개");
         }
     }
 
@@ -36,6 +36,8 @@ public class OutputView {
     }
 
     public void printGift(boolean hasGift, String giftItem, int giftCount) {
+        System.out.println("\n<증정 메뉴>");
+
         if (hasGift) {
             System.out.println(giftItem + " " + giftCount + "개");
             return;
