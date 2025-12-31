@@ -72,7 +72,7 @@ public class Order {
 
         for (Map.Entry<Menu, Integer> entry : orderMenuList.entrySet()) {
             if (MAIN.equals(entry.getKey().getType())) {
-                count += 1;
+                count += entry.getValue();
             }
         }
 
@@ -84,7 +84,7 @@ public class Order {
 
         for (Map.Entry<Menu, Integer> entry : orderMenuList.entrySet()) {
             if (DESSERT.equals(entry.getKey().getType())) {
-                count += 1;
+                count += entry.getValue();
             }
         }
 
