@@ -20,6 +20,7 @@ public class PromotionController {
     private static final int CHRISTMAS_DISCOUNT_BASE = 1_000;
     private static final int WEEK_DISCOUNT = 2_023;
     private static final int WEEKEND_DISCOUNT = 2_023;
+    private static final int SPECIAL_DISCOUNT = 1_000;
 
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
@@ -221,6 +222,10 @@ public class PromotionController {
         }
 
         // 4. 특별 할인
+        if (order.isSpecial()) {
+            totalDiscount -= SPECIAL_DISCOUNT;
+            advantageList.put("특별 할인", -SPECIAL_DISCOUNT);
+        }
 
         // 5. 증정 이벤트 (샴페인 1개)
         boolean hasGift = order.getOriginalTotalPrice() >= GIFT_PRICE_BOUND;
