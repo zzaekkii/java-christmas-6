@@ -4,6 +4,7 @@ import christmas.Order.Order;
 import christmas.menu.Menu;
 import christmas.view.InputView;
 import christmas.view.OutputView;
+import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.Parsed;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -213,6 +214,11 @@ public class PromotionController {
         }
 
         // 3. 주말 할인 (금,토)
+        if (order.isWeekend()) {
+            int weekendDiscount = order.getMainCount() * WEEKEND_DISCOUNT;
+            totalDiscount -= weekendDiscount;
+            advantageList.put("주말 할인", -weekendDiscount);
+        }
 
         // 4. 특별 할인
 
