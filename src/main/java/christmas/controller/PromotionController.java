@@ -157,6 +157,8 @@ public class PromotionController {
                 if (orderMenu.getType().equals(DRINK)) {
                     drinkCount += count;
                 }
+
+                menuCount += count;
             } catch (NumberFormatException e) {
                 throw new IllegalArgumentException("유효하지 않은 주문입니다. 다시 입력해 주세요.");
             }
@@ -168,6 +170,11 @@ public class PromotionController {
 
         // 음료만 주문 불가능
         if (drinkCount == orderMenus.size()) {
+            throw new IllegalArgumentException("유효하지 않은 주문입니다. 다시 입력해 주세요.");
+        }
+
+        // 20개 넘으면 주문 불가능
+        if (menuCount > 20) {
             throw new IllegalArgumentException("유효하지 않은 주문입니다. 다시 입력해 주세요.");
         }
 
