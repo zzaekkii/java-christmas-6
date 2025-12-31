@@ -1,8 +1,12 @@
 package christmas.Order;
 
 import christmas.menu.Menu;
+import christmas.menu.MenuType;
 
 import java.util.Map;
+
+import static christmas.menu.MenuType.DESSERT;
+import static christmas.menu.MenuType.MAIN;
 
 public class Order {
 
@@ -61,5 +65,29 @@ public class Order {
         }
 
         return total;
+    }
+
+    public int getMainCount() {
+        int count = 0;
+
+        for (Map.Entry<Menu, Integer> entry : orderMenuList.entrySet()) {
+            if (MAIN.equals(entry.getKey().getType())) {
+                count += 1;
+            }
+        }
+
+        return count;
+    }
+
+    public int getDessertCount() {
+        int count = 0;
+
+        for (Map.Entry<Menu, Integer> entry : orderMenuList.entrySet()) {
+            if (DESSERT.equals(entry.getKey().getType())) {
+                count += 1;
+            }
+        }
+
+        return count;
     }
 }
