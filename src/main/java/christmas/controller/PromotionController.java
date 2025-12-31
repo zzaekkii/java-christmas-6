@@ -4,6 +4,7 @@ import christmas.Order.Order;
 import christmas.menu.Menu;
 import christmas.view.InputView;
 import christmas.view.OutputView;
+import org.mockito.internal.matchers.Or;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,12 +46,12 @@ public class PromotionController {
 
                 // 주문 메뉴, 개수 추출
                 Map<Menu, Integer> orderList = extractOrderMenu(orderMenu);
+
+                return new Order(orderDate, orderList);
             } catch (IllegalArgumentException e) {
                 outputView.printErrorMessage(e.getMessage());
             }
         }
-
-//        return new Order(orderDate, );
     }
 
     private int readAndValidateDate() {
