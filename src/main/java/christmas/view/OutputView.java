@@ -34,9 +34,9 @@ public class OutputView {
         System.out.println(String.format("%,d", originalTotalPrice) + "원");
     }
 
-    public void printGift(boolean hasGift) {
+    public void printGift(boolean hasGift, String giftItem, int giftCount) {
         if (hasGift) {
-            System.out.println("샴페인 1개");
+            System.out.println(giftItem + " " + giftCount + "개");
             return;
         }
 
