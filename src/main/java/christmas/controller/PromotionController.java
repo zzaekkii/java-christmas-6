@@ -166,7 +166,10 @@ public class PromotionController {
 
     private void showAdvantage(Order custumerOrder) {
         // 혜택 결과 시작 문구 출력
-        outputView.printResultStart(custumerOrder);
+        outputView.printResultStart(custumerOrder.getDay());
+
+        // 주문한 메뉴와 개수 표시
+        outputView.printMenus(custumerOrder.getOrderMenuList());
 
 
     }
