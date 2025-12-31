@@ -20,11 +20,12 @@ public class PromotionController {
     private static final int WEEK_DISCOUNT = 2_023;
     private static final int WEEKEND_DISCOUNT = 2_023;
     private static final int SPECIAL_DISCOUNT = 1_000;
+    private static final int EVENT_PRICE_BOUND = 10_000;
 
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
 
-    private HashMap<String, Menu> menuList = new HashMap<>();
+    private final HashMap<String, Menu> menuList = new HashMap<>();
 
     public void run() {
         // 기본 환영 문구 출력
@@ -190,17 +191,47 @@ public class PromotionController {
         outputView.printMenus(order.getOrderMenuList());
 
         // 할인 전 총주문 금액 출력
-        outputView.printOriginalTotalPrice(order.getOriginalTotalPrice());
+        int originalTotalPrice = order.getOriginalTotalPrice();
+        outputView.printOriginalTotalPrice(originalTotalPrice);
 
 
         // 총 받은 혜택 목록 (할인에 사용할 거임)
         Map<String, Integer> advantageList = new HashMap<>();
         int totalDiscount = 0;
 
-        checkEnableDiscounts(order, totalDiscount, advantageList);
+        // 1만원 이상 주문인 경우 혜택 확인
+        if (originalTotalPrice >= EVENT_PRICE_BOUND) {
+            // 1. 크리스마스 디데이 할인
+            boolean hasChristmasSale = order.getDay() <= CHRISTMAS_DAY;
+            if (hasChristmasSale) {
+                int christmasDiscount = CHRISTMAS_DISCOUNT_BASE + (order.getDay() * 100);
+                totalDiscount -= christmasDiscount;
+                advantageList.put("크리스마스 디데이 할인", -christmasDiscount);
+            }
 
-        // 5. 증정 이벤트 (샴페인 1개)
-        boolean hasGift = order.getOriginalTotalPrice() >= GIFT_PRICE_BOUND;
+            // 2. 평일 할인 (일-목)
+            if (!order.isWeekend()) {
+                int weekDisCount = order.getDessertCount() * WEEK_DISCOUNT;
+                totalDiscount -= weekDisCount;
+                advantageList.put("평일 할인", -weekDisCount);
+            }
+
+            // 3. 주말 할인 (금,토)
+            if (order.isWeekend()) {
+                int weekendDiscount = order.getMainCount() * WEEKEND_DISCOUNT;
+                totalDiscount -= weekendDiscount;
+                advantageList.put("주말 할인", -weekendDiscount);
+            }
+
+            // 4. 특별 할인
+            if (order.isSpecial()) {
+                totalDiscount -= SPECIAL_DISCOUNT;
+                advantageList.put("특별 할인", -SPECIAL_DISCOUNT);
+            }
+        }
+
+        // 증정 이벤트 (샴페인 1개)
+        boolean hasGift = originalTotalPrice >= GIFT_PRICE_BOUND;
         if (hasGift) {
             advantageList.put("증정 이벤트", -menuList.get(GIFT_ITEM).getPrice());
         }
@@ -213,36 +244,8 @@ public class PromotionController {
 
         // 총혜택 금액 출력
         outputView.printTotalDiscount(totalDiscount);
-    }
 
-    private static void checkEnableDiscounts(Order order, int totalDiscount, Map<String, Integer> advantageList) {
-        // 혜택 확인
-        // 1. 크리스마스 디데이 할인
-        boolean hasChristmasSale = order.getDay() <= CHRISTMAS_DAY;
-        if (hasChristmasSale) {
-            int christmasDiscount = CHRISTMAS_DISCOUNT_BASE + (order.getDay() * 100);
-            totalDiscount -= christmasDiscount;
-            advantageList.put("크리스마스 디데이 할인", -christmasDiscount);
-        }
-
-        // 2. 평일 할인 (일-목)
-        if (!order.isWeekend()) {
-            int weekDisCount = order.getDessertCount() * WEEK_DISCOUNT;
-            totalDiscount -= weekDisCount;
-            advantageList.put("평일 할인", -weekDisCount);
-        }
-
-        // 3. 주말 할인 (금,토)
-        if (order.isWeekend()) {
-            int weekendDiscount = order.getMainCount() * WEEKEND_DISCOUNT;
-            totalDiscount -= weekendDiscount;
-            advantageList.put("주말 할인", -weekendDiscount);
-        }
-
-        // 4. 특별 할인
-        if (order.isSpecial()) {
-            totalDiscount -= SPECIAL_DISCOUNT;
-            advantageList.put("특별 할인", -SPECIAL_DISCOUNT);
-        }
+        // 할인 후 예상 결제 금액 출력
+        outputView.printTotalPrice(originalTotalPrice + totalDiscount);
     }
 }
