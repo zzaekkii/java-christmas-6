@@ -4,7 +4,6 @@ import christmas.Order.Order;
 import christmas.menu.Menu;
 import christmas.view.InputView;
 import christmas.view.OutputView;
-import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.Parsed;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -198,6 +197,22 @@ public class PromotionController {
         Map<String, Integer> advantageList = new HashMap<>();
         int totalDiscount = 0;
 
+        checkEnableDiscounts(order, totalDiscount, advantageList);
+
+        // 5. 증정 이벤트 (샴페인 1개)
+        boolean hasGift = order.getOriginalTotalPrice() >= GIFT_PRICE_BOUND;
+        if (hasGift) {
+            advantageList.put("증정 이벤트", -menuList.get(GIFT_ITEM).getPrice());
+        }
+
+        // 증정 메뉴 출력
+        outputView.printGift(hasGift, GIFT_ITEM, GIFT_COUNT);
+
+        // 혜택 내역 출력
+        outputView.printAdvantages(advantageList);
+    }
+
+    private static void checkEnableDiscounts(Order order, int totalDiscount, Map<String, Integer> advantageList) {
         // 혜택 확인
         // 1. 크리스마스 디데이 할인
         boolean hasChristmasSale = order.getDay() <= CHRISTMAS_DAY;
@@ -226,16 +241,5 @@ public class PromotionController {
             totalDiscount -= SPECIAL_DISCOUNT;
             advantageList.put("특별 할인", -SPECIAL_DISCOUNT);
         }
-
-        // 5. 증정 이벤트 (샴페인 1개)
-        boolean hasGift = order.getOriginalTotalPrice() >= GIFT_PRICE_BOUND;
-        if (hasGift) {
-            advantageList.put("증정 이벤트", -menuList.get(GIFT_ITEM).getPrice());
-        }
-
-        // 증정 메뉴 출력
-        outputView.printGift(hasGift, GIFT_ITEM, GIFT_COUNT);
-
-
     }
 }

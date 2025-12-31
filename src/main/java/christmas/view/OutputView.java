@@ -42,4 +42,17 @@ public class OutputView {
 
         System.out.println("없음");
     }
+
+    public void printAdvantages(Map<String, Integer> advantageList) {
+        System.out.println("\n<혜택 내역>");
+
+        if (advantageList.isEmpty()) {
+            System.out.println("없음");
+            return;
+        }
+
+        for (Map.Entry<String, Integer> entry : advantageList.entrySet()) {
+            System.out.println(entry.getKey() + ": " + String.format("%,d", entry.getValue()) + "원");
+        }
+    }
 }
