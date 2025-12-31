@@ -7,7 +7,6 @@ import java.util.Map;
 public class OutputView {
 
     private static final String ERROR_MESSAGE_PREFIX = "[ERROR] ";
-    private static final int GIFT_PRICE_BOUND = 120_000;
 
     public void printWelcome() {
         System.out.println("안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.");
@@ -35,8 +34,8 @@ public class OutputView {
         System.out.println(String.format("%,d", originalTotalPrice) + "원");
     }
 
-    public void printGift(int originalTotalPrice) {
-        if (originalTotalPrice >= GIFT_PRICE_BOUND) {
+    public void printGift(boolean hasGift) {
+        if (hasGift) {
             System.out.println("샴페인 1개");
             return;
         }

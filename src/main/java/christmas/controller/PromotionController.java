@@ -12,6 +12,8 @@ import static christmas.menu.MenuType.*;
 
 public class PromotionController {
 
+    private static final int GIFT_PRICE_BOUND = 120_000;
+
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
 
@@ -174,7 +176,20 @@ public class PromotionController {
         // 할인 전 총주문 금액
         outputView.printOriginalTotalPrice(order.getOriginalTotalPrice());
 
-        // 증정 메뉴 출력
-        outputView.printGift(order.getOriginalTotalPrice());
+
+        // 총 받은 혜택 목록
+        Map<String, Integer> advantageList = new HashMap<>();
+
+        // 증정 메뉴
+        boolean hasGift = false;
+        if (order.getOriginalTotalPrice() >= GIFT_PRICE_BOUND) {
+            hasGift = true;
+
+            advantageList.put("증정 이벤트", -menuList.get("샴페인").getPrice());
+        }
+        outputView.printGift(hasGift);
+
+        // 혜택받은 내역 출력
+
     }
 }
