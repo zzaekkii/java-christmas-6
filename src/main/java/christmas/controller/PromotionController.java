@@ -17,7 +17,8 @@ public class PromotionController {
     private static final int GIFT_PRICE_BOUND = 120_000;
     private static final int CHRISTMAS_DAY = 25;
     private static final int CHRISTMAS_DISCOUNT_BASE = 1_000;
-
+    private static final int WEEK_DISCOUNT = 2_023;
+    private static final int WEEKEND_DISCOUNT = 2_023;
 
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
@@ -109,6 +110,7 @@ public class PromotionController {
         // - 구분자로 분리
         Map<Menu, Integer> orderMenus = new HashMap<>();
         int drinkCount = 0;
+        int menuCount = 0;
 
         for (String order : orders) {
             if (order.isBlank()) {
@@ -136,9 +138,6 @@ public class PromotionController {
             }
 
             Menu orderMenu = menuList.get(menuAndCount[0]);
-            if (orderMenu.getType().equals(DRINK)) {
-                drinkCount += 1;
-            }
 
             // 중복된 메뉴를 입력한 경우
             if (orderMenus.containsKey(orderMenu)) {
@@ -154,6 +153,10 @@ public class PromotionController {
                 }
 
                 orderMenus.put(menuList.get(menuAndCount[0]), count);
+
+                if (orderMenu.getType().equals(DRINK)) {
+                    drinkCount += count;
+                }
             } catch (NumberFormatException e) {
                 throw new IllegalArgumentException("유효하지 않은 주문입니다. 다시 입력해 주세요.");
             }
@@ -190,12 +193,17 @@ public class PromotionController {
         // 1. 크리스마스 디데이 할인
         boolean hasChristmasSale = order.getDay() <= CHRISTMAS_DAY;
         if (hasChristmasSale) {
-            int additionDiscount = order.getDay() * 100;
-            totalDiscount -= (CHRISTMAS_DISCOUNT_BASE + additionDiscount);
-            advantageList.put("크리스마스 디데이 할인", -(CHRISTMAS_DISCOUNT_BASE + additionDiscount));
+            int christmasDiscount = CHRISTMAS_DISCOUNT_BASE + (order.getDay() * 100);
+            totalDiscount -= christmasDiscount;
+            advantageList.put("크리스마스 디데이 할인", -christmasDiscount);
         }
 
         // 2. 평일 할인 (일-목)
+        if (!order.isWeekend()) {
+            int weekDisCount = order.getDessertCount() * WEEK_DISCOUNT;
+            totalDiscount -= weekDisCount;
+            advantageList.put("평일 할인", -weekDisCount);
+        }
 
         // 3. 주말 할인 (금,토)
 
