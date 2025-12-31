@@ -210,6 +210,9 @@ public class PromotionController {
 
         // 혜택 내역 출력
         outputView.printAdvantages(advantageList);
+
+        // 총혜택 금액 출력
+        outputView.printTotalDiscount(totalDiscount);
     }
 
     private static void checkEnableDiscounts(Order order, int totalDiscount, Map<String, Integer> advantageList) {

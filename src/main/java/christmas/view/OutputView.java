@@ -55,4 +55,10 @@ public class OutputView {
             System.out.println(entry.getKey() + ": " + String.format("%,d", entry.getValue()) + "원");
         }
     }
+
+    public void printTotalDiscount(int totalDiscount) {
+        System.out.println("\n<총혜택 금액>");
+
+        System.out.println(String.format("%,d", totalDiscount) + "원");
+    }
 }
