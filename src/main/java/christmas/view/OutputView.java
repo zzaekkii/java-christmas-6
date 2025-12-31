@@ -1,5 +1,7 @@
 package christmas.view;
 
+import christmas.Order.Order;
+
 public class OutputView {
 
     private static final String ERROR_MESSAGE_PREFIX = "[ERROR] ";
@@ -15,5 +17,10 @@ public class OutputView {
 
     public void printErrorMessage(String message) {
         System.out.println(ERROR_MESSAGE_PREFIX + message);
+    }
+
+    public void printResultStart(Order custumerOrder) {
+        int day = custumerOrder.getDay();
+        System.out.println("12월 " + day + "일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!");
     }
 }

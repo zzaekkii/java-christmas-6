@@ -27,12 +27,34 @@ public class PromotionController {
         // 입력한대로 주문 생성
         Order custumerOrder = readCustomerOrder();
 
-        //
-
+        // 최종 혜택 출력
+        showAdvantage(custumerOrder);
     }
 
     private void welcome() {
         outputView.printWelcome();
+    }
+
+    private void initializeMenu() {
+        // 애피타이저
+        menuList.put("양송이수프", new Menu("양송이수프", 6000, APPETIZER));
+        menuList.put("타파스", new Menu("타파스", 5500, APPETIZER));
+        menuList.put("시저샐러드", new Menu("시저샐러드", 8000, APPETIZER));
+
+        // 메인
+        menuList.put("티본스테이크", new Menu("티본스테이크", 55000, MAIN));
+        menuList.put("바비큐립", new Menu("바비큐립", 54000, MAIN));
+        menuList.put("해산물파스타", new Menu("해산물파스타", 35000, MAIN));
+        menuList.put("크리스마스파스타", new Menu("크리스마스파스타", 25000, MAIN));
+
+        // 디저트
+        menuList.put("초코케이크", new Menu("초코케이크", 15000, DESSERT));
+        menuList.put("아이스크림", new Menu("아이스크림", 5000, DESSERT));
+
+        // 음료
+        menuList.put("제로콜라", new Menu("제로콜라", 3000, DRINK));
+        menuList.put("레드와인", new Menu("레드와인", 60000, DRINK));
+        menuList.put("샴페인", new Menu("샴페인", 25000, DRINK));
     }
 
     private Order readCustomerOrder() {
@@ -142,25 +164,10 @@ public class PromotionController {
         return orderMenus;
     }
 
-    private void initializeMenu() {
-        // 애피타이저
-        menuList.put("양송이수프", new Menu("양송이수프", 6000, APPETIZER));
-        menuList.put("타파스", new Menu("타파스", 5500, APPETIZER));
-        menuList.put("시저샐러드", new Menu("시저샐러드", 8000, APPETIZER));
+    private void showAdvantage(Order custumerOrder) {
+        // 혜택 결과 시작 문구 출력
+        outputView.printResultStart(custumerOrder);
 
-        // 메인
-        menuList.put("티본스테이크", new Menu("티본스테이크", 55000, MAIN));
-        menuList.put("바비큐립", new Menu("바비큐립", 54000, MAIN));
-        menuList.put("해산물파스타", new Menu("해산물파스타", 35000, MAIN));
-        menuList.put("크리스마스파스타", new Menu("크리스마스파스타", 25000, MAIN));
 
-        // 디저트
-        menuList.put("초코케이크", new Menu("초코케이크", 15000, DESSERT));
-        menuList.put("아이스크림", new Menu("아이스크림", 5000, DESSERT));
-
-        // 음료
-        menuList.put("제로콜라", new Menu("제로콜라", 3000, DRINK));
-        menuList.put("레드와인", new Menu("레드와인", 60000, DRINK));
-        menuList.put("샴페인", new Menu("샴페인", 25000, DRINK));
     }
 }
