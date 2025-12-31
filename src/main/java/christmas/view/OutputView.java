@@ -66,7 +66,7 @@ public class OutputView {
     }
 
     public void printTotalPrice(int totalPrice) {
-        System.out.println("\n<총혜택 금액>");
+        System.out.println("\n<할인 후 예상 결제 금액>");
 
         System.out.println(String.format("%,d", totalPrice) + "원");
     }
