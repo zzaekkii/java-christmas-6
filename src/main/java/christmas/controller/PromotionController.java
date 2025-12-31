@@ -127,7 +127,7 @@ public class PromotionController {
             }
 
             // 메뉴 형식에 맞지 않는 경우
-            if (!menuAndCount[0].matches("[A-Za-z]+")) {
+            if (!menuAndCount[0].matches("[가-힇A-Za-z]+")) {
                 throw new IllegalArgumentException("유효하지 않은 주문입니다. 다시 입력해 주세요.");
             }
             if (!menuAndCount[1].matches("\\d+")) {
