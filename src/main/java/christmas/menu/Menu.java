@@ -1,9 +1,9 @@
 package christmas.menu;
 
 public class Menu {
-    private String name;
-    private int price;
-    private MenuType type;
+    private final String name;
+    private final int price;
+    private final MenuType type;
 
     public Menu(String name, int price, MenuType type) {
         this.name = name;
